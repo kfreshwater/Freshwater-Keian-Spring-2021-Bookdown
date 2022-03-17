@@ -5,7 +5,7 @@ bookdown::gitbook:
     toc:
       collapse: subsection
       before: |
-        <li><a href="./">Introduction to Data Science - A Spring 2021 Code Portfolio</a></li>
+        <li><a href="./">Spring 2022 Code Portfolio</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 bookdown::pdf_book:
