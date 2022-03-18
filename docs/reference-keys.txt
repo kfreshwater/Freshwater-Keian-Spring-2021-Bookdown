@@ -1,7 +1,0 @@
-methods
-site-description
-data-acquisition-and-plotting-tests
-static-data-plotter
-interactive-data-plotter
-dygraph-example.
-poudre-paragraph

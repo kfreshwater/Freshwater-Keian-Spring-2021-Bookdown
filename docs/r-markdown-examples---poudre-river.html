@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Spring 2022 Code Portfolio</title>
+  <title>Chapter 1 R Markdown Examples - Poudre River | Spring 2022 Code Portfolio</title>
   <meta name="description" content="Bookdown." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Spring 2022 Code Portfolio" />
+  <meta property="og:title" content="Chapter 1 R Markdown Examples - Poudre River | Spring 2022 Code Portfolio" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Spring 2022 Code Portfolio" />
+  <meta name="twitter:title" content="Chapter 1 R Markdown Examples - Poudre River | Spring 2022 Code Portfolio" />
   
   <meta name="twitter:description" content="Bookdown." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="r-markdown-examples---poudre-river.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="methods.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -176,23 +176,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Spring 2022 Code Portfolio</h1>
-<p class="author"><em>Keian Freshwater</em></p>
-<p class="date"><em>2022-03-17</em></p>
-</div>
-<div id="introduction" class="section level1 unnumbered">
-<h1>Introduction</h1>
-<p>This site serves as a portfolio for R software projects conducted during Spring 2022. These projects were created during Colorado State University’s ‘Introduction to Data Science’ graduate course, but independently serve as a representation of different learned techniques. Each of the following chapters highlight a specific R topic expressed through a real-world analysis, consisting of detailed figures, textual interpretations of the data, and commented code blocks.</p>
-
+<div id="r-markdown-examples---poudre-river" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> R Markdown Examples - Poudre River</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-markdown-examples---poudre-river.html#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="r-markdown-examples---poudre-river.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="r-markdown-examples---poudre-river.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+<pre><code>## v ggplot2 3.3.5     v purrr   0.3.4
+## v tibble  3.1.3     v dplyr   1.0.7
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   2.0.1     v forcats 0.5.1</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.1.1</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="r-markdown-examples---poudre-river.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dataRetrieval)</span></code></pre></div>
+<pre><code>## Warning: package &#39;dataRetrieval&#39; was built under R version 4.1.1</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="r-markdown-examples---poudre-river.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dygraphs)</span></code></pre></div>
+<pre><code>## Warning: package &#39;dygraphs&#39; was built under R version 4.1.2</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r-markdown-examples---poudre-river.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xts)</span></code></pre></div>
+<pre><code>## Warning: package &#39;xts&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## Warning: package &#39;zoo&#39; was built under R version 4.1.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre><code>## 
+## Attaching package: &#39;xts&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     first, last</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="r-markdown-examples---poudre-river.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
