@@ -1,7 +1,7 @@
-# R Markdown Examples - Poudre River
+# R Markdown Basics
 
 
-```{r setup, include=TRUE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
@@ -10,8 +10,9 @@ library(dygraphs)
 library(xts)
 ```
 
+**Case Study: The Poudre River**
 
-# Methods
+## Methods
 
 The Poudre River at Lincoln Bridge is:
 
