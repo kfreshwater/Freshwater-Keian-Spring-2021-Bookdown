@@ -1,0 +1,97 @@
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(dataRetrieval)
+library(dygraphs)
+library(xts)
+```
+
+
+# Methods
+
+The Poudre River at Lincoln Bridge is:
+
+  - Downstream of only a little bit of urban stormwater
+
+  - Near Odell Brewing CO
+  
+  - Near an open space area and the Poudre River Trail
+  
+  - **Downstream of many agricultural diversions**
+
+
+## Site Description
+
+![](https://waterdata.usgs.gov/nwisweb/local/state/co/text/pics/06752260big.jpg)
+
+
+## Data Acquisition and Plotting tests
+
+```{r downloader}
+
+#Downloaded Data using the custom USGS NWIS tool
+
+q <- readNWISdv(siteNumbers = '06752260',
+                parameterCd = '00060',
+                startDate = '2017-01-01',
+                endDate = '2022-01-01') %>%
+  rename(q = 'X_00060_00003')
+
+
+```
+
+
+
+## Static Data Plotter
+
+
+```{r, warning = FALSE, fig.width = 8, fig.height = 5}
+
+#First use of ggplot to graph data
+
+ggplot(q, aes(x = Date, y = q)) + 
+  geom_line() + 
+  ylab('Q (cfs)') + 
+  ggtitle('Discharge in the Poudre River, Fort Collins')
+
+```
+
+
+## Interactive Data Plotter
+
+
+```{r}
+
+#order by date
+q_xts <- xts(q$q, order.by = q$Date)
+
+#first use of 'dygraph' in order to greate an interactive plotter
+dygraph(q_xts) %>%
+  dyAxis("y", label = "Discharge (cfs)") 
+```
+
+
+
+## DyGraph example. 
+
+```{r}
+
+#second use of 'dygraph' in order to order and create an interactive plotter. Identical graph, but demonstrates inclusion of distinct points.
+
+q_xts <- xts(q$q, order.by = q$Date)
+
+
+dygraph(q_xts) %>%
+  dyAxis("y", label = "Discharge (cfs)") %>%
+  dyOptions(drawPoints = TRUE, pointSize = 1.6)
+```
+
+## Poudre Paragraph
+
+```{r}
+#example paragraph to demonstrate url, bolding, and italic functions.
+```
+
+The **Poudre River** is a [National Heritage Area](https://www.nps.gov/places/cache-la-poudre-river-national-heritage-area.htm) located in the state of Colorado, originally designated in 2009. The river begins in Rocky Mountain National Park, before joining with the South Platte River east of Greeley, Colorado. Over *half a million residents* in Northern Colorado depend on the water supplied by the Poudre River. The [National Water Quality Council](https://www.waterqualitydata.us/provider/NWIS/USGS-CO/USGS-06752260/) tracks USGS stations monitoring hydrologic conditions; on the National Water Quality Council's website, station data can be isolated from the beginning of the Poudre River, all the way to the South Platte's--and resulting Platte's--conjunction to the Missippi River. **Looking just at Fort Collins**, there are a high concentration of USGS stations along the path of the river. [Fort Collins Utilities](https://www.fcgov.com/utilities/what-we-do/water/water-treatment/) works hard to ensure that residents in the city will have clean, drinkable water; although not all water comes from tin 2020, it was estimated that facilities treat *23 million gallons of water* a day. The city doesn't solely rely on the South Platte River, of course; during wildfire runoff events that increases sediment levels **above** capacity limits, [Fort Collins relies more heavily on water from Horsetooth Reservoir](https://www.coloradoan.com/story/news/2021/04/28/fort-collins-water-shortage-watch-due-cameron-peak-fire-impacts/4861897001/).
