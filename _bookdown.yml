@@ -2,6 +2,6 @@ book_filename: "Spring 2022 Code Portfolio"
 chapter_name: "Chapter "
 repo: https://github.com/kfreshwater/Freshwater-Keian-Spring-2022-Bookdown
 output_dir: docs
-rmd_files: ["index.Rmd", "01-R-Markdown-Examples.Rmd"]
+rmd_files: ["index.Rmd", "01-R-Markdown-Examples.Rmd","02-Fire-Wrangle.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes
