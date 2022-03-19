@@ -1,0 +1,239 @@
+# Ieterations (Snow Functions)
+
+
+```{r setup, include=FALSE}
+library(rvest)
+library(tidyverse)
+library(lubridate)
+library(readxl)
+
+```
+
+**Case Study: Snowstudies.org**
+
+
+## Extract the meteorological data URLs. 
+
+```{r}
+#Extracting only the weblinks and then the URLs! The `rvest` package is used to to get the URLs for the `SASP forcing` and `SBSP_forcing` meteorological datasets.
+
+site_url <- 'https://snowstudies.org/archived-data/'
+
+#Reading the web url
+webpage <- read_html(site_url)
+
+links_forcing <- webpage %>%
+  html_nodes('a') %>%
+  .[grepl('forcing',.)] %>%
+  html_attr('href')
+
+```
+
+## Downloading meteorological data. 
+```{r}
+#Use of the `download_file` and `str_split_fixed` commands to download the data and save it in data folder
+
+#Grabbing only the name of the file by splitting out on forward slashes
+splits_forcing <- str_split_fixed(links_forcing,'/',8)
+
+#Keeping only the 8th column
+dataset_forcing <- splits_forcing[,8] 
+
+#generating a file list for where the data goes
+file_names_forcing <- paste0('data/',dataset_forcing)
+
+for(i in 1:2){
+  download.file(links_forcing[i],destfile=file_names_forcing[i])
+}
+
+downloaded_forcing <- file.exists(file_names_forcing)
+
+evaluate_forcing <- !all(downloaded_forcing)
+```
+
+## Writing a custom function to read in data and append a site column to the data. 
+
+```{r,warning=F,message=F}
+
+# headers from metadata pdf file
+
+library(pdftools)
+headers_forcing <- pdf_text('https://snowstudies.org/wp-content/uploads/2022/02/Serially-Complete-Metadata-text08.pdf') %>%
+  readr::read_lines(.) %>%
+  trimws(.) %>%
+  str_split_fixed(.,'\\.',2) %>%
+  .[,2] %>%
+  .[1:26] %>%
+  str_trim(side = "left")
+
+#writing the function
+forcing_reader <- function(file_names_forcing){
+  name = str_split_fixed(file_names_forcing,'/',2)[,2] %>%
+    gsub('_Forcing_Data.txt','',.)
+  reading = read.delim(file_names_forcing, header = FALSE, sep ="",col.names = headers_forcing,skip = 4) %>%
+  mutate(site=name)
+}
+```
+## Using the `map` function to read in both meteorological files.
+
+```{r}
+forcing_data_full <- map_dfr(file_names_forcing,forcing_reader)
+
+#tibble summary
+summary(forcing_data_full)
+```
+
+
+## Line plots - mean temp by year by site.
+
+```{r,warning=F,message=F}
+#summarizing mean temperature
+forcing_yearly <- forcing_data_full %>%
+  group_by(year,site) %>%
+  summarize(yearly_air_temp_k = mean(air.temp..K.,na.rm=T))
+
+#graphing data
+ggplot(forcing_yearly,aes(x=year,y=yearly_air_temp_k,color=site)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(2003,2004,2005,2006,2007,2008,2009,2010,2011))+
+  ggthemes::theme_few() + 
+    ggthemes::scale_color_few() +
+  ylab('Air Temperature (K)')
+```
+
+For both the SASP and SBSP sites, here is a sharp increase in air temperature between the years 2003 and 2005; this is at odds with the stable trendline from 2005 onwards. The following graph filters the years before 2005:
+
+```{r,warning=F,message=F}
+#filtering by year 2005
+forcing_yearly_filter <- forcing_yearly %>%
+  filter(year >= 2005)
+
+#graphing data
+ggplot(forcing_yearly_filter,aes(x=year,y=yearly_air_temp_k,color=site)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(2005,2006,2007,2008,2009,2010,2011)) +
+  ggthemes::theme_few() + 
+  ggthemes::scale_color_few() +
+  ylab('Air Temperature (K)')
+```
+
+## Writing a function for line plots of monthly average temperature at each site for a given year.
+Hint: https://ggplot2.tidyverse.org/reference/print.ggplot.html
+```{r,warning=F,message=F}
+#summarizing mean temperature
+forcing_monthly_air_temperature <- forcing_data_full %>%
+  group_by(year,month,site) %>%
+  summarize(monthly_air_temp_k = mean(air.temp..K.,na.rm=T))
+
+#creating function for graphing
+temp_plot <- function(filter_year_function,year_air){
+    filter_year_function <- forcing_monthly_air_temperature %>%
+      group_by(year,month,site)  %>%
+      filter(year==year_air)
+    
+    #changing text by year
+    str1 = 'Month ('
+    str2 = year_air
+    str3 = "Year)"
+    
+    #plotting
+    x= ggplot(filter_year_function, aes(x=month,y=monthly_air_temp_k,color=site)) +
+    geom_line() +
+    scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12), label = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"))+
+    ggthemes::theme_few() +
+    ggthemes::scale_color_few() +
+    ylab('Air Temperature (K)') +
+    xlab(paste(str1,str2,str3))
+    
+    print(x)
+ }
+```
+
+## For loop - multi-year plotting
+```{r,warning=F,message=F}
+#using function, plotting each year from 2005 to 2010.
+for (year_air in 2005:2010) {
+  temp_plot(filter_year_function,year_air)
+}
+
+```
+
+From 2005 to 2010, at no point in the year is the Senator Beck Study Plot warmer than the Snow Angel Study Plot.
+
+### Plot of average daily precipitation by day of year 
+```{r,message=F,warning=F}
+
+#mutating by day of year
+forcing_precip_filter <- forcing_data_full %>%
+  group_by(year,month,day,site) %>%
+  filter(site=='SBB_SASP') %>%
+  unite("date", year, month, day, sep = "-", remove = FALSE) %>%
+  mutate(date = ymd(date)) %>% 
+  mutate(doy = yday(date)) %>%
+  summarize(precip= precip..WMO.corrected..kg.m.2.s.1.,
+            doy=doy)
+#summarizing mean values
+forcing_precip_filter_avg <- forcing_precip_filter %>%
+  group_by(doy,site) %>%
+  summarize(doy_precip = mean(precip))
+  
+#graphing
+ggplot(forcing_precip_filter_avg, aes(x=doy,y=doy_precip)) +
+    geom_line() +
+    ggthemes::theme_few() +
+    ggthemes::scale_color_few() +
+    ylab('Average Corrected WMO precipitation (kg/m^2*s)') +
+    xlab('Day of the Year')
+    
+```
+
+
+
+These graphs show the corrected WMO precipitation in kg/m&2*s for each day of the year, averaged over the data range 2003-2011. Both SBB_SASP and SBB_SBSP report from the same gauge.
+
+
+## Function and For loop -- yearly plots of precipitation by day of year.
+```{r,message=F,warning=F}
+
+#creating function
+
+precip_plot <- function(filter_year_function_precip,year_precip){
+  
+  forcing_precip_function_year<- forcing_data_full %>%
+  group_by(year,month,day,site) %>%
+  filter(site=='SBB_SASP',
+         year==year_precip) %>%
+  unite("date", year, month, day, sep = "-", remove = FALSE) %>%
+  mutate(date = ymd(date)) %>% 
+  mutate(doy = yday(date)) %>%
+  summarize(precip= precip..WMO.corrected..kg.m.2.s.1.,
+            doy=doy)
+
+  forcing_precip_filter_avg_year <- forcing_precip_function_year %>%
+  group_by(doy,site) %>%
+  summarize(doy_precip = mean(precip))
+    
+  #changing text by year
+    str1 = 'Day of the Year ('
+    str2 = year_precip
+    str3 = "Year)"
+    
+    #plotting
+    z = ggplot(forcing_precip_filter_avg_year, aes(x=doy,y=doy_precip)) +
+    geom_line() +
+    ggthemes::theme_few() +
+    ggthemes::scale_color_few() +
+    ylab('Average Corrected WMO precipitation (kg/m^2*s)') +
+    xlab(paste(str1,str2,str3))
+    
+    print(z)
+ }
+
+#excecuting function in for loop
+
+for (year_precip in 2003:2011) {
+  precip_plot(filter_year_function_precip,year_precip)
+}
+```
+
+These graphs show the corrected WMO precipitation in kg/m&2*s for each year in the range 2003-2011 Both SBB_SASP and SBB_SBSP are report from the same gauge.

@@ -284,7 +284,7 @@ greenest_month_updated <- max(green_NVDI_updated)
 ```
 NDVI stands for 'Normalized Difference Vegetation Index', where the highest NDVI will indicate the greenest month on average. The greenest month is August, with an average NDVI of 0.385766.
 
-## What month is the snowiest on average?
+### What month is the snowiest on average?
 
 **Calculate Averages for NDVI:**
 
