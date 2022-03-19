@@ -12,6 +12,7 @@ correlation-between-average-ndsi-normalized-snow-index-for-january---april-and-a
 how-is-the-snow-effect-from-question-2-different-between-pre--and-post-burn-and-burned-and-unburned
 what-month-is-the-greenest-month-on-average
 what-month-is-the-snowiest-on-average
+ieterations-snow-functions
 extract-the-meteorological-data-urls.
 downloading-meteorological-data.
 writing-a-custom-function-to-read-in-data-and-append-a-site-column-to-the-data.
@@ -21,4 +22,4 @@ writing-a-function-for-line-plots-of-monthly-average-temperature-at-each-site-fo
 for-loop---multi-year-plotting
 plot-of-average-daily-precipitation-by-day-of-year
 function-and-for-loop-yearly-plots-of-precipitation-by-day-of-year.
-ieterations-snow-functions
+iterations-snow-functions

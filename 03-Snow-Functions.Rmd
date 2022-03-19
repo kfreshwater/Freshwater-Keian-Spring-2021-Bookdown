@@ -1,4 +1,4 @@
-# Ieterations (Snow Functions)
+# Iterations (Snow Functions)
 
 
 ```{r setup, include=FALSE}

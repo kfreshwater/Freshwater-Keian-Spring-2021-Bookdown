@@ -265,59 +265,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-2"><a href="ieterations-snow-functions.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="ieterations-snow-functions.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#tibble summary</span></span>
 <span id="cb4-4"><a href="ieterations-snow-functions.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(forcing_data_full)</span></code></pre></div>
-<pre><code>##       year          month             day             hour           minute 
-##  Min.   :2003   Min.   : 1.000   Min.   : 1.00   Min.   : 0.00   Min.   :0  
-##  1st Qu.:2005   1st Qu.: 3.000   1st Qu.: 8.00   1st Qu.: 5.75   1st Qu.:0  
-##  Median :2007   Median : 6.000   Median :16.00   Median :11.50   Median :0  
-##  Mean   :2007   Mean   : 6.472   Mean   :15.76   Mean   :11.50   Mean   :0  
-##  3rd Qu.:2009   3rd Qu.: 9.000   3rd Qu.:23.00   3rd Qu.:17.25   3rd Qu.:0  
-##  Max.   :2011   Max.   :12.000   Max.   :31.00   Max.   :23.00   Max.   :0  
-##                                                                             
+<pre><code>##       year          month             day             hour          minute 
+##  Min.   :2003   Min.   : 1.000   Min.   : 1.00   Min.   : 0.0   Min.   :0  
+##  1st Qu.:2005   1st Qu.: 3.000   1st Qu.: 8.00   1st Qu.: 5.0   1st Qu.:0  
+##  Median :2006   Median : 6.000   Median :16.00   Median :11.0   Median :0  
+##  Mean   :2007   Mean   : 6.421   Mean   :15.75   Mean   :11.5   Mean   :0  
+##  3rd Qu.:2008   3rd Qu.: 9.000   3rd Qu.:23.00   3rd Qu.:17.0   3rd Qu.:0  
+##  Max.   :2011   Max.   :12.000   Max.   :31.00   Max.   :23.0   Max.   :0  
+##                                                                            
 ##      second  precip..kg.m.2.s.1. sw.down..W.m.2.     lw.down..W.m.2.  
 ##  Min.   :0   Min.   :0.000e+00   Min.   :-9999.000   Min.   :-9999.0  
-##  1st Qu.:0   1st Qu.:0.000e+00   1st Qu.:   -3.510   1st Qu.:  173.4  
-##  Median :0   Median :0.000e+00   Median :   -0.344   Median :  231.4  
-##  Mean   :0   Mean   :3.838e-05   Mean   :-1351.008   Mean   :-1325.7  
-##  3rd Qu.:0   3rd Qu.:0.000e+00   3rd Qu.:  294.900   3rd Qu.:  272.2  
-##  Max.   :0   Max.   :6.111e-03   Max.   : 1341.000   Max.   :  365.8  
+##  1st Qu.:0   1st Qu.:0.000e+00   1st Qu.:   -3.865   1st Qu.:  161.8  
+##  Median :0   Median :0.000e+00   Median :   -0.864   Median :  230.0  
+##  Mean   :0   Mean   :3.797e-05   Mean   :-1925.681   Mean   :-1897.2  
+##  3rd Qu.:0   3rd Qu.:0.000e+00   3rd Qu.:  248.800   3rd Qu.:  273.4  
+##  Max.   :0   Max.   :6.111e-03   Max.   : 1295.000   Max.   :  365.8  
 ##                                                                       
 ##   air.temp..K.   windspeed..m.s.1.   relative.humidity.... pressure..Pa.  
 ##  Min.   :242.1   Min.   :-9999.000   Min.   :  0.011       Min.   :63931  
-##  1st Qu.:265.8   1st Qu.:    0.852   1st Qu.: 37.580       1st Qu.:63931  
-##  Median :272.6   Median :    1.548   Median : 59.910       Median :65397  
-##  Mean   :272.6   Mean   : -790.054   Mean   : 58.891       Mean   :65397  
-##  3rd Qu.:279.7   3rd Qu.:    3.087   3rd Qu.: 81.600       3rd Qu.:66863  
+##  1st Qu.:265.9   1st Qu.:    0.690   1st Qu.: 37.870       1st Qu.:63931  
+##  Median :272.5   Median :    1.151   Median : 60.600       Median :66863  
+##  Mean   :272.7   Mean   :-1081.515   Mean   : 59.156       Mean   :65936  
+##  3rd Qu.:279.6   3rd Qu.:    1.926   3rd Qu.: 82.200       3rd Qu.:66863  
 ##  Max.   :295.8   Max.   :  317.300   Max.   :324.800       Max.   :66863  
 ##                                                                           
 ##  specific.humidity..g.g.1. calculated.dewpoint.temperature..K.
 ##  Min.   :0.000000          Min.   :   0.0                     
-##  1st Qu.:0.001744          1st Qu.:   0.0                     
-##  Median :0.002838          Median :   0.0                     
-##  Mean   :0.003372          Mean   :  74.9                     
-##  3rd Qu.:0.004508          3rd Qu.:   0.0                     
+##  1st Qu.:0.001705          1st Qu.:   0.0                     
+##  Median :0.002807          Median :   0.0                     
+##  Mean   :0.003305          Mean   : 102.4                     
+##  3rd Qu.:0.004394          3rd Qu.:   0.0                     
 ##  Max.   :0.014780          Max.   :2002.0                     
 ##                                                               
 ##  precip..WMO.corrected..kg.m.2.s.1.
 ##  Min.   :   0.0                    
 ##  1st Qu.:   0.0                    
 ##  Median :   0.0                    
-##  Mean   : 424.7                    
-##  3rd Qu.:   0.0                    
+##  Mean   : 563.3                    
+##  3rd Qu.:2000.0                    
 ##  Max.   :3002.0                    
 ##                                    
 ##  air.temp..corrected.with.Kent.et.al...1993...K.
-##  Min.   :   0                                   
-##  1st Qu.:   0                                   
-##  Median :   0                                   
-##  Mean   : 438                                   
-##  3rd Qu.:   0                                   
-##  Max.   :5002                                   
+##  Min.   :   0.0                                 
+##  1st Qu.:   0.0                                 
+##  Median :   0.0                                 
+##  Mean   : 592.8                                 
+##  3rd Qu.:   0.0                                 
+##  Max.   :5002.0                                 
 ##                                                 
 ##  air.temp..corrected.with.Anderson.and.Baumgartner..1998..K.
 ##  Min.   :   0.0                                             
 ##  1st Qu.:   0.0                                             
 ##  Median :   0.0                                             
-##  Mean   : 173.9                                             
+##  Mean   : 227.9                                             
 ##  3rd Qu.:   0.0                                             
 ##  Max.   :5002.0                                             
 ##                                                             
@@ -325,29 +325,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Min.   :   0.0                                        
 ##  1st Qu.:   0.0                                        
 ##  Median :   0.0                                        
-##  Mean   : 605.9                                        
+##  Mean   : 786.8                                        
 ##  3rd Qu.:   0.0                                        
 ##  Max.   :6002.0                                        
 ##                                                        
 ##  air.temp..corrected.with.Huwald.et.al...2009...K. qc.code.precip
 ##  Min.   :   0.00                                   Mode:logical  
-##  1st Qu.:   0.00                                   NA&#39;s:138336   
+##  1st Qu.:   0.00                                   NA&#39;s:101187   
 ##  Median :   0.00                                                 
-##  Mean   :  56.49                                                 
+##  Mean   :  62.28                                                 
 ##  3rd Qu.:   0.00                                                 
 ##  Max.   :6009.00                                                 
-##  NA&#39;s   :5214                                                    
+##  NA&#39;s   :5209                                                    
 ##  qc.code.sw.down qc.code.lw.down qc.code.air.temp qc.code.wind.speed
 ##  Mode:logical    Mode:logical    Mode:logical     Mode:logical      
-##  NA&#39;s:138336     NA&#39;s:138336     NA&#39;s:138336      NA&#39;s:138336       
+##  NA&#39;s:101187     NA&#39;s:101187     NA&#39;s:101187      NA&#39;s:101187       
 ##                                                                     
 ##                                                                     
 ##                                                                     
 ##                                                                     
 ##                                                                     
 ##  qc.code.relhum     site          
-##  Mode:logical   Length:138336     
-##  NA&#39;s:138336    Class :character  
+##  Mode:logical   Length:101187     
+##  NA&#39;s:101187    Class :character  
 ##                 Mode  :character  
 ##                                   
 ##                                   
