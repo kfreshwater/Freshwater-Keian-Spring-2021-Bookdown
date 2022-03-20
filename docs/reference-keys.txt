@@ -22,8 +22,6 @@ writing-a-function-for-line-plots-of-monthly-average-temperature-at-each-site-fo
 for-loop---multi-year-plotting
 plot-of-average-daily-precipitation-by-day-of-year
 function-and-for-loop-yearly-plots-of-precipitation-by-day-of-year.
-lagos-spatial-analysis
-loading-in-data
 regressions
 weather-data-analysis
 load-prism-daily-maximum-temperatures
