@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Regressions | Spring 2022 Code Portfolio</title>
+  <meta name="description" content="Bookdown." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Regressions | Spring 2022 Code Portfolio" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bookdown." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Regressions | Spring 2022 Code Portfolio" />
+  
+  <meta name="twitter:description" content="Bookdown." />
+  
+
+<meta name="author" content="Keian Freshwater" />
+
+
+<meta name="date" content="2022-03-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="iterations-snow-functions.html"/>
+
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spring 2022 Code Portfolio</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html"><i class="fa fa-check"></i><b>1</b> R Markdown Basics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html#methods"><i class="fa fa-check"></i><b>1.1</b> Methods</a></li>
+<li class="chapter" data-level="1.2" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html#site-description"><i class="fa fa-check"></i><b>1.2</b> Site Description</a></li>
+<li class="chapter" data-level="1.3" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html#data-acquisition-and-plotting-tests"><i class="fa fa-check"></i><b>1.3</b> Data Acquisition and Plotting tests</a></li>
+<li class="chapter" data-level="1.4" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html#static-data-plotter"><i class="fa fa-check"></i><b>1.4</b> Static Data Plotter</a></li>
+<li class="chapter" data-level="1.5" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html#interactive-data-plotter"><i class="fa fa-check"></i><b>1.5</b> Interactive Data Plotter</a></li>
+<li class="chapter" data-level="1.6" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html#dygraph-example."><i class="fa fa-check"></i><b>1.6</b> DyGraph example.</a></li>
+<li class="chapter" data-level="1.7" data-path="r-markdown-basics.html"><a href="r-markdown-basics.html#poudre-paragraph"><i class="fa fa-check"></i><b>1.7</b> Poudre Paragraph</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="fire-wrangle.html"><a href="fire-wrangle.html"><i class="fa fa-check"></i><b>2</b> Fire Wrangle</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="fire-wrangle.html"><a href="fire-wrangle.html#correlation-between-ndvi-and-ndmi-using-a-wide-dataset.-data-is-between-1984-2019-and-focuses-on-summer-months-jun-sept"><i class="fa fa-check"></i><b>2.1</b> Correlation between NDVI and NDMI, using a wide dataset. Data is between 1984-2019, and focuses on summer months (Jun-Sept):</a></li>
+<li class="chapter" data-level="2.2" data-path="fire-wrangle.html"><a href="fire-wrangle.html#correlation-between-average-ndsi-normalized-snow-index-for-january---april-and-average-ndvi-for-june-august.-does-the-previous-years-snow-cover-influence-vegetation-growth-for-the-following-summer"><i class="fa fa-check"></i><b>2.2</b> Correlation between average NDSI (normalized snow index) for January - April and average NDVI for June-August. Does the previous year’s snow cover influence vegetation growth for the following summer?</a></li>
+<li class="chapter" data-level="2.3" data-path="fire-wrangle.html"><a href="fire-wrangle.html#how-is-the-snow-effect-from-question-2-different-between-pre--and-post-burn-and-burned-and-unburned"><i class="fa fa-check"></i><b>2.3</b> How is the snow effect from question 2 different between pre- and post-burn and burned and unburned?</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="fire-wrangle.html"><a href="fire-wrangle.html#what-month-is-the-greenest-month-on-average"><i class="fa fa-check"></i><b>2.3.1</b> What month is the greenest month on average?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="fire-wrangle.html"><a href="fire-wrangle.html#what-month-is-the-snowiest-on-average"><i class="fa fa-check"></i><b>2.3.2</b> What month is the snowiest on average?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html"><i class="fa fa-check"></i><b>3</b> Iterations (Snow Functions)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#extract-the-meteorological-data-urls."><i class="fa fa-check"></i><b>3.1</b> Extract the meteorological data URLs.</a></li>
+<li class="chapter" data-level="3.2" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#downloading-meteorological-data."><i class="fa fa-check"></i><b>3.2</b> Downloading meteorological data.</a></li>
+<li class="chapter" data-level="3.3" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#writing-a-custom-function-to-read-in-data-and-append-a-site-column-to-the-data."><i class="fa fa-check"></i><b>3.3</b> Writing a custom function to read in data and append a site column to the data.</a></li>
+<li class="chapter" data-level="3.4" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#using-the-map-function-to-read-in-both-meteorological-files."><i class="fa fa-check"></i><b>3.4</b> Using the <code>map</code> function to read in both meteorological files.</a></li>
+<li class="chapter" data-level="3.5" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#line-plots---mean-temp-by-year-by-site."><i class="fa fa-check"></i><b>3.5</b> Line plots - mean temp by year by site.</a></li>
+<li class="chapter" data-level="3.6" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#writing-a-function-for-line-plots-of-monthly-average-temperature-at-each-site-for-a-given-year."><i class="fa fa-check"></i><b>3.6</b> Writing a function for line plots of monthly average temperature at each site for a given year.</a></li>
+<li class="chapter" data-level="3.7" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#for-loop---multi-year-plotting"><i class="fa fa-check"></i><b>3.7</b> For loop - multi-year plotting</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#plot-of-average-daily-precipitation-by-day-of-year"><i class="fa fa-check"></i><b>3.7.1</b> Plot of average daily precipitation by day of year</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="iterations-snow-functions.html"><a href="iterations-snow-functions.html#function-and-for-loop-yearly-plots-of-precipitation-by-day-of-year."><i class="fa fa-check"></i><b>3.8</b> Function and For loop – yearly plots of precipitation by day of year.</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regressions.html"><a href="regressions.html"><i class="fa fa-check"></i><b>4</b> Regressions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="regressions.html"><a href="regressions.html#weather-data-analysis"><i class="fa fa-check"></i><b>4.1</b> Weather Data Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="regressions.html"><a href="regressions.html#load-prism-daily-maximum-temperatures"><i class="fa fa-check"></i><b>4.1.1</b> Load PRISM daily maximum temperatures</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regressions.html"><a href="regressions.html#temperature-trends"><i class="fa fa-check"></i><b>4.2</b> Temperature trends</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="regressions.html"><a href="regressions.html#summer-temperature-trends-winneshiek-county"><i class="fa fa-check"></i><b>4.2.1</b> Summer temperature trends: Winneshiek County</a></li>
+<li class="chapter" data-level="4.2.2" data-path="regressions.html"><a href="regressions.html#winter-temperatures---winneshiek-county"><i class="fa fa-check"></i><b>4.2.2</b> Winter Temperatures - Winneshiek County</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="regressions.html"><a href="regressions.html#multiple-regression-quadratic-time-trend"><i class="fa fa-check"></i><b>4.3</b> Multiple regression – Quadratic time trend</a></li>
+<li class="chapter" data-level="4.4" data-path="regressions.html"><a href="regressions.html#download-nass-corn-yield-data"><i class="fa fa-check"></i><b>4.4</b> Download NASS corn yield data</a></li>
+<li class="chapter" data-level="4.5" data-path="regressions.html"><a href="regressions.html#fit-and-plot-linear-time-trend---winneshiek-county-ia"><i class="fa fa-check"></i><b>4.5</b> Fit and Plot Linear time trend - Winneshiek County, IA</a></li>
+<li class="chapter" data-level="4.6" data-path="regressions.html"><a href="regressions.html#fit-and-plot-quadratic-time-trend---winneshiek-county-ia"><i class="fa fa-check"></i><b>4.6</b> Fit and Plot quadratic time trend - Winneshiek County, IA</a></li>
+<li class="chapter" data-level="4.7" data-path="regressions.html"><a href="regressions.html#summer-temperature-and-yields-for-the-winneshiek-county-time-series."><i class="fa fa-check"></i><b>4.7</b> Summer Temperature and yields for the Winneshiek County time series.</a></li>
+<li class="chapter" data-level="4.8" data-path="regressions.html"><a href="regressions.html#cross-section-relationship-between-temperature-and-yield-winneshiek-county"><i class="fa fa-check"></i><b>4.8</b> 2018 Cross-Section relationship between temperature and yield – Winneshiek County</a></li>
+<li class="chapter" data-level="4.9" data-path="regressions.html"><a href="regressions.html#panel-graphs-for-all-iowa-counties"><i class="fa fa-check"></i><b>4.9</b> Panel Graphs for All Iowa Counties</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="regressions.html"><a href="regressions.html#cross-section-plot-for-soybeans-all-iowa-counties"><i class="fa fa-check"></i><b>4.9.1</b> Cross-Section Plot for Soybeans – All Iowa Counties</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spring 2022 Code Portfolio</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regressions" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Regressions</h1>
+<p><em>Case Study: Iowa Corn Yields</em></p>
+<div id="weather-data-analysis" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Weather Data Analysis</h2>
+<div id="load-prism-daily-maximum-temperatures" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Load PRISM daily maximum temperatures</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regressions.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># daily max temperature</span></span>
+<span id="cb1-2"><a href="regressions.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dimensions: counties x days x years</span></span>
+<span id="cb1-3"><a href="regressions.html#cb1-3" aria-hidden="true" tabindex="-1"></a>prism <span class="ot">&lt;-</span> <span class="fu">readMat</span>(<span class="st">&quot;Data/Chapter_5/prismiowa.mat&quot;</span>)</span>
+<span id="cb1-4"><a href="regressions.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="regressions.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># look at county #1</span></span>
+<span id="cb1-6"><a href="regressions.html#cb1-6" aria-hidden="true" tabindex="-1"></a>t_1981_c1 <span class="ot">&lt;-</span> prism<span class="sc">$</span>tmaxdaily.iowa[<span class="dv">1</span>,,<span class="dv">1</span>]</span>
+<span id="cb1-7"><a href="regressions.html#cb1-7" aria-hidden="true" tabindex="-1"></a>t_1981_c1[<span class="dv">366</span>]</span></code></pre></div>
+<pre><code>## [1] NaN</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regressions.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>, t_1981_c1, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/tmax%20data-1.png" width="672" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regressions.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-2"><a href="regressions.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>, <span class="at">y =</span> t_1981_c1)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="regressions.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="regressions.html#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;day of year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="regressions.html#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;daily maximum temperature (°C)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="regressions.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Daily Maximum Temperature, Iowa County #1&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/tmax%20data-2.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regressions.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assign dimension names to tmax matrix</span></span>
+<span id="cb5-2"><a href="regressions.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(prism<span class="sc">$</span>tmaxdaily.iowa) <span class="ot">&lt;-</span> <span class="fu">list</span>(prism<span class="sc">$</span>COUNTYFP, <span class="dv">1</span><span class="sc">:</span><span class="dv">366</span>, prism<span class="sc">$</span>years)</span>
+<span id="cb5-3"><a href="regressions.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="regressions.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># converted 3d matrix into a data frame</span></span>
+<span id="cb5-5"><a href="regressions.html#cb5-5" aria-hidden="true" tabindex="-1"></a>tmaxdf <span class="ot">&lt;-</span> <span class="fu">as.data.frame.table</span>(prism<span class="sc">$</span>tmaxdaily.iowa)</span>
+<span id="cb5-6"><a href="regressions.html#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="regressions.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># relabel the columns</span></span>
+<span id="cb5-8"><a href="regressions.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tmaxdf) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;countyfp&quot;</span>,<span class="st">&quot;doy&quot;</span>,<span class="st">&quot;year&quot;</span>,<span class="st">&quot;tmax&quot;</span>)</span>
+<span id="cb5-9"><a href="regressions.html#cb5-9" aria-hidden="true" tabindex="-1"></a>tmaxdf <span class="ot">&lt;-</span> <span class="fu">tibble</span>(tmaxdf)</span></code></pre></div>
+</div>
+</div>
+<div id="temperature-trends" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Temperature trends</h2>
+<div id="summer-temperature-trends-winneshiek-county" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Summer temperature trends: Winneshiek County</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regressions.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#convert to numeric</span></span>
+<span id="cb6-2"><a href="regressions.html#cb6-2" aria-hidden="true" tabindex="-1"></a>tmaxdf<span class="sc">$</span>doy <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(tmaxdf<span class="sc">$</span>doy)</span>
+<span id="cb6-3"><a href="regressions.html#cb6-3" aria-hidden="true" tabindex="-1"></a>tmaxdf<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(tmaxdf<span class="sc">$</span>year))</span>
+<span id="cb6-4"><a href="regressions.html#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="regressions.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#filter by summer</span></span>
+<span id="cb6-6"><a href="regressions.html#cb6-6" aria-hidden="true" tabindex="-1"></a>winnesummer <span class="ot">&lt;-</span> tmaxdf <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="regressions.html#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(countyfp<span class="sc">==</span><span class="dv">191</span> <span class="sc">&amp;</span> doy <span class="sc">&gt;=</span> <span class="dv">152</span> <span class="sc">&amp;</span> doy <span class="sc">&lt;=</span> <span class="dv">243</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="regressions.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="regressions.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meantmax =</span> <span class="fu">mean</span>(tmax))</span>
+<span id="cb6-10"><a href="regressions.html#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="regressions.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#plot data</span></span>
+<span id="cb6-12"><a href="regressions.html#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(winnesummer, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> meantmax)) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="regressions.html#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="regressions.html#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb6-15"><a href="regressions.html#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tmax (°C)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="regressions.html#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/temp%20trends-1.png" width="672" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regressions.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#linear model</span></span>
+<span id="cb7-2"><a href="regressions.html#cb7-2" aria-hidden="true" tabindex="-1"></a>lm_summertmax <span class="ot">&lt;-</span> <span class="fu">lm</span>(meantmax <span class="sc">~</span> year, winnesummer)</span>
+<span id="cb7-3"><a href="regressions.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_summertmax)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = meantmax ~ year, data = winnesummer)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.5189 -0.7867 -0.0341  0.6859  3.7415 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 41.57670   36.44848   1.141    0.262
+## year        -0.00747    0.01823  -0.410    0.684
+## 
+## Residual standard error: 1.232 on 36 degrees of freedom
+## Multiple R-squared:  0.004644,   Adjusted R-squared:  -0.02301 
+## F-statistic: 0.168 on 1 and 36 DF,  p-value: 0.6844</code></pre>
+</div>
+<div id="winter-temperatures---winneshiek-county" class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Winter Temperatures - Winneshiek County</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regressions.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter by winter</span></span>
+<span id="cb9-2"><a href="regressions.html#cb9-2" aria-hidden="true" tabindex="-1"></a>winnewinter <span class="ot">&lt;-</span> tmaxdf <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="regressions.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(countyfp<span class="sc">==</span><span class="dv">191</span> <span class="sc">&amp;</span> (doy <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">|</span> doy <span class="sc">&gt;=</span> <span class="dv">335</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(tmax)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="regressions.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="regressions.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meantmax =</span> <span class="fu">mean</span>(tmax))</span>
+<span id="cb9-6"><a href="regressions.html#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="regressions.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plot data</span></span>
+<span id="cb9-8"><a href="regressions.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(winnewinter, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> meantmax)) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="regressions.html#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-10"><a href="regressions.html#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb9-11"><a href="regressions.html#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tmax (°C)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="regressions.html#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/winter%20temps-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regressions.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#linear model</span></span>
+<span id="cb10-2"><a href="regressions.html#cb10-2" aria-hidden="true" tabindex="-1"></a>lm_wintertmax <span class="ot">&lt;-</span> <span class="fu">lm</span>(meantmax <span class="sc">~</span> year, winnewinter)</span>
+<span id="cb10-3"><a href="regressions.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_wintertmax)</span></code></pre></div>
+</div>
+</div>
+<div id="multiple-regression-quadratic-time-trend" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Multiple regression – Quadratic time trend</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regressions.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create quadratic value</span></span>
+<span id="cb11-2"><a href="regressions.html#cb11-2" aria-hidden="true" tabindex="-1"></a>winnewinter<span class="sc">$</span>yearsq <span class="ot">&lt;-</span> winnewinter<span class="sc">$</span>year<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb11-3"><a href="regressions.html#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="regressions.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#quadratic model</span></span>
+<span id="cb11-5"><a href="regressions.html#cb11-5" aria-hidden="true" tabindex="-1"></a>lm_wintertmaxquad <span class="ot">&lt;-</span> <span class="fu">lm</span>(meantmax <span class="sc">~</span> year <span class="sc">+</span> yearsq, winnewinter)</span>
+<span id="cb11-6"><a href="regressions.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_wintertmaxquad)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = meantmax ~ year + yearsq, data = winnewinter)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.3539 -1.2985 -0.2813  1.4055  4.2620 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -1.086e+04  1.238e+04  -0.877    0.386
+## year         1.085e+01  1.239e+01   0.876    0.387
+## yearsq      -2.710e-03  3.097e-03  -0.875    0.388
+## 
+## Residual standard error: 2.051 on 35 degrees of freedom
+## Multiple R-squared:  0.02694,    Adjusted R-squared:  -0.02867 
+## F-statistic: 0.4845 on 2 and 35 DF,  p-value: 0.6201</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regressions.html#cb13-1" aria-hidden="true" tabindex="-1"></a>winnewinter<span class="sc">$</span>fitted <span class="ot">&lt;-</span> lm_wintertmaxquad<span class="sc">$</span>fitted.values</span>
+<span id="cb13-2"><a href="regressions.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="regressions.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plot data</span></span>
+<span id="cb13-4"><a href="regressions.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(winnewinter) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="regressions.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> meantmax)) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="regressions.html#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> fitted)) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="regressions.html#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb13-8"><a href="regressions.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tmax (°C)&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/quadratic%20temp%20trend-1.png" width="672" /></p>
+</div>
+<div id="download-nass-corn-yield-data" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Download NASS corn yield data</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regressions.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set our API key with NASS</span></span>
+<span id="cb14-2"><a href="regressions.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nassqs_auth</span>(<span class="at">key =</span> <span class="st">&quot;5B47588E-E354-32FE-A42C-2789B2935796 &quot;</span>)</span>
+<span id="cb14-3"><a href="regressions.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="regressions.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters to query on </span></span>
+<span id="cb14-5"><a href="regressions.html#cb14-5" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">commodity_desc =</span> <span class="st">&quot;CORN&quot;</span>, <span class="at">util_practice_desc =</span> <span class="st">&quot;GRAIN&quot;</span>, <span class="at">prodn_practice_desc =</span> <span class="st">&quot;ALL PRODUCTION PRACTICES&quot;</span>, <span class="at">year__GE =</span> <span class="dv">1981</span>, <span class="at">state_alpha =</span> <span class="st">&quot;IA&quot;</span>)</span>
+<span id="cb14-6"><a href="regressions.html#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="regressions.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># download</span></span>
+<span id="cb14-8"><a href="regressions.html#cb14-8" aria-hidden="true" tabindex="-1"></a>cornyieldsall <span class="ot">&lt;-</span> <span class="fu">nassqs_yields</span>(params)</span>
+<span id="cb14-9"><a href="regressions.html#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="regressions.html#cb14-10" aria-hidden="true" tabindex="-1"></a>cornyieldsall<span class="sc">$</span>county_ansi <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(cornyieldsall<span class="sc">$</span>county_ansi)</span>
+<span id="cb14-11"><a href="regressions.html#cb14-11" aria-hidden="true" tabindex="-1"></a>cornyieldsall<span class="sc">$</span>yield <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(cornyieldsall<span class="sc">$</span>Value)</span>
+<span id="cb14-12"><a href="regressions.html#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="regressions.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># clean and filter this dataset</span></span>
+<span id="cb14-14"><a href="regressions.html#cb14-14" aria-hidden="true" tabindex="-1"></a>cornyields <span class="ot">&lt;-</span> <span class="fu">select</span>(cornyieldsall, county_ansi, county_name, yield, year) <span class="sc">%&gt;%</span></span>
+<span id="cb14-15"><a href="regressions.html#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(county_ansi) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(yield))</span>
+<span id="cb14-16"><a href="regressions.html#cb14-16" aria-hidden="true" tabindex="-1"></a>cornyields <span class="ot">&lt;-</span> <span class="fu">tibble</span>(cornyields)</span></code></pre></div>
+</div>
+<div id="fit-and-plot-linear-time-trend---winneshiek-county-ia" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Fit and Plot Linear time trend - Winneshiek County, IA</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regressions.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter data to Winneshiek county</span></span>
+<span id="cb15-2"><a href="regressions.html#cb15-2" aria-hidden="true" tabindex="-1"></a>winneyields <span class="ot">&lt;-</span> cornyields <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="regressions.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county_name <span class="sc">==</span> <span class="st">&#39;WINNESHIEK&#39;</span>)</span>
+<span id="cb15-4"><a href="regressions.html#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="regressions.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#plot data</span></span>
+<span id="cb15-6"><a href="regressions.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(winneyields, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="regressions.html#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-8"><a href="regressions.html#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb15-9"><a href="regressions.html#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tmax (°C)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="regressions.html#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regressions.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#linear model</span></span>
+<span id="cb16-2"><a href="regressions.html#cb16-2" aria-hidden="true" tabindex="-1"></a>lm_winnieyields <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield<span class="sc">~</span> year, winneyields)</span>
+<span id="cb16-3"><a href="regressions.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_winnieyields)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ year, data = winneyields)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -51.163  -1.841   2.363   9.437  24.376 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -4763.290    448.286  -10.63 4.46e-13 ***
+## year            2.457      0.224   10.96 1.77e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 16.97 on 39 degrees of freedom
+## Multiple R-squared:  0.7551, Adjusted R-squared:  0.7488 
+## F-statistic: 120.2 on 1 and 39 DF,  p-value: 1.767e-13</code></pre>
+<p>The adjusted R-squared of 0.7488 shows there is a significant, but not ironclad, linear relationship between year and yield.</p>
+</div>
+<div id="fit-and-plot-quadratic-time-trend---winneshiek-county-ia" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Fit and Plot quadratic time trend - Winneshiek County, IA</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="regressions.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create quadratic valye</span></span>
+<span id="cb18-2"><a href="regressions.html#cb18-2" aria-hidden="true" tabindex="-1"></a>winneyields<span class="sc">$</span>yearsq_yield <span class="ot">&lt;-</span> (winneyields<span class="sc">$</span>year)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb18-3"><a href="regressions.html#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="regressions.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#fit quadratic model</span></span>
+<span id="cb18-5"><a href="regressions.html#cb18-5" aria-hidden="true" tabindex="-1"></a>lm_winneyields_quad <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> year <span class="sc">+</span> yearsq_yield, winneyields)</span>
+<span id="cb18-6"><a href="regressions.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_winneyields_quad)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ year + yearsq_yield, data = winneyields)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -51.384  -3.115   1.388   9.743  25.324 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   2.583e+04  8.580e+04   0.301    0.765
+## year         -2.812e+01  8.576e+01  -0.328    0.745
+## yearsq_yield  7.641e-03  2.143e-02   0.357    0.723
+## 
+## Residual standard error: 17.17 on 38 degrees of freedom
+## Multiple R-squared:  0.7559, Adjusted R-squared:  0.7431 
+## F-statistic: 58.84 on 2 and 38 DF,  p-value: 2.311e-12</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regressions.html#cb20-1" aria-hidden="true" tabindex="-1"></a>winneyields<span class="sc">$</span>fitted <span class="ot">&lt;-</span> lm_winneyields_quad<span class="sc">$</span>fitted.values</span>
+<span id="cb20-2"><a href="regressions.html#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="regressions.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plot model</span></span>
+<span id="cb20-4"><a href="regressions.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(winneyields) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="regressions.html#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="regressions.html#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> winneyields<span class="sc">$</span>fitted)) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="regressions.html#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb20-8"><a href="regressions.html#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;yield&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>The adjusted R-squared of 0.743 shows there is a significant, but not ironclad, quadratic relationship between year and yield.</p>
+</div>
+<div id="summer-temperature-and-yields-for-the-winneshiek-county-time-series." class="section level2" number="4.7">
+<h2><span class="header-section-number">4.7</span> Summer Temperature and yields for the Winneshiek County time series.</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="regressions.html#cb21-1" aria-hidden="true" tabindex="-1"></a>summer_yields <span class="ot">&lt;-</span> <span class="fu">left_join</span>(winnesummer, winneyields)</span>
+<span id="cb21-2"><a href="regressions.html#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="regressions.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Linear Trend</span></span>
+<span id="cb21-4"><a href="regressions.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summer_yields, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> meantmax, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="regressions.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-6"><a href="regressions.html#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb21-7"><a href="regressions.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tmax (°C)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Yield&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="regressions.html#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regressions.html#cb22-1" aria-hidden="true" tabindex="-1"></a>lm_summeryield <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield<span class="sc">~</span> meantmax, summer_yields)</span>
+<span id="cb22-2"><a href="regressions.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_summeryield)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ meantmax, data = summer_yields)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -71.96 -19.85  -3.19  24.64  61.72 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  275.876    118.335   2.331   0.0255 *
+## meantmax      -4.763      4.438  -1.073   0.2902  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 32.88 on 36 degrees of freedom
+## Multiple R-squared:  0.03101,    Adjusted R-squared:  0.004098 
+## F-statistic: 1.152 on 1 and 36 DF,  p-value: 0.2902</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="regressions.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Quadratic Trend</span></span>
+<span id="cb24-2"><a href="regressions.html#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="regressions.html#cb24-3" aria-hidden="true" tabindex="-1"></a>summer_yields<span class="sc">$</span>tempsq_summer <span class="ot">&lt;-</span>(summer_yields<span class="sc">$</span>meantmax)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb24-4"><a href="regressions.html#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="regressions.html#cb24-5" aria-hidden="true" tabindex="-1"></a>lm_summeryields_quad <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> meantmax <span class="sc">+</span> tempsq_summer, summer_yields)</span>
+<span id="cb24-6"><a href="regressions.html#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_summeryields_quad)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ meantmax + tempsq_summer, data = summer_yields)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -56.587 -22.262  -0.982  22.409  52.798 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)   -4223.604   1446.639  -2.920  0.00609 **
+## meantmax        328.918    107.068   3.072  0.00410 **
+## tempsq_summer    -6.173      1.979  -3.119  0.00362 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 29.5 on 35 degrees of freedom
+## Multiple R-squared:  0.2417, Adjusted R-squared:  0.1984 
+## F-statistic: 5.579 on 2 and 35 DF,  p-value: 0.007887</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="regressions.html#cb26-1" aria-hidden="true" tabindex="-1"></a>summer_yields<span class="sc">$</span>fitted <span class="ot">&lt;-</span> lm_summeryields_quad<span class="sc">$</span>fitted.values</span>
+<span id="cb26-2"><a href="regressions.html#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="regressions.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summer_yields) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="regressions.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> meantmax, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="regressions.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> meantmax, <span class="at">y =</span> fitted)) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="regressions.html#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb26-7"><a href="regressions.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;T_max&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p>The linear adjusted R-squared of 0.0041 indicates there is not a significant linear relationship between yield and average summer temperature. However, using a quadratic regression with T_max^2 increases the Adjusted r-squared to 0.1984, indicating a (relatively) more significant relationship between yield and average summer temperature.</p>
+</div>
+<div id="cross-section-relationship-between-temperature-and-yield-winneshiek-county" class="section level2" number="4.8">
+<h2><span class="header-section-number">4.8</span> 2018 Cross-Section relationship between temperature and yield – Winneshiek County</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regressions.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter data</span></span>
+<span id="cb27-2"><a href="regressions.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="regressions.html#cb27-3" aria-hidden="true" tabindex="-1"></a>yields_18 <span class="ot">&lt;-</span> cornyields <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="regressions.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year<span class="sc">==</span><span class="dv">2018</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="regressions.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county_name) <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="regressions.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-7"><a href="regressions.html#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(county_ansi))</span>
+<span id="cb27-8"><a href="regressions.html#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="regressions.html#cb27-9" aria-hidden="true" tabindex="-1"></a>summer_county_18 <span class="ot">&lt;-</span> tmaxdf <span class="sc">%&gt;%</span></span>
+<span id="cb27-10"><a href="regressions.html#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(countyfp) <span class="sc">%&gt;%</span></span>
+<span id="cb27-11"><a href="regressions.html#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year<span class="sc">==</span><span class="dv">2018</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-12"><a href="regressions.html#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(doy <span class="sc">&gt;=</span> <span class="dv">152</span> <span class="sc">&amp;</span> doy <span class="sc">&lt;=</span><span class="dv">243</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-13"><a href="regressions.html#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meatmax=</span><span class="fu">mean</span>(tmax)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-14"><a href="regressions.html#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">county_ansi =</span> <span class="st">&quot;countyfp&quot;</span>)</span>
+<span id="cb27-15"><a href="regressions.html#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="regressions.html#cb27-16" aria-hidden="true" tabindex="-1"></a>summer_county_18<span class="sc">$</span>county_ansi <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(summer_county_18<span class="sc">$</span>county_ansi))</span>
+<span id="cb27-17"><a href="regressions.html#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="regressions.html#cb27-18" aria-hidden="true" tabindex="-1"></a>county_summer_yield <span class="ot">&lt;-</span> <span class="fu">left_join</span>(yields_18,summer_county_18, <span class="at">by=</span><span class="st">&#39;county_ansi&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="regressions.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#fitted values</span></span>
+<span id="cb28-2"><a href="regressions.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="regressions.html#cb28-3" aria-hidden="true" tabindex="-1"></a>county_summer_yield<span class="sc">$</span>tempsq_county_summer <span class="ot">&lt;-</span>(county_summer_yield<span class="sc">$</span>meatmax)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb28-4"><a href="regressions.html#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="regressions.html#cb28-5" aria-hidden="true" tabindex="-1"></a>lm_countysummeryields_quad <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> meatmax <span class="sc">+</span> tempsq_county_summer, county_summer_yield)</span>
+<span id="cb28-6"><a href="regressions.html#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_summeryields_quad)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ meantmax + tempsq_summer, data = summer_yields)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -56.587 -22.262  -0.982  22.409  52.798 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)   -4223.604   1446.639  -2.920  0.00609 **
+## meantmax        328.918    107.068   3.072  0.00410 **
+## tempsq_summer    -6.173      1.979  -3.119  0.00362 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 29.5 on 35 degrees of freedom
+## Multiple R-squared:  0.2417, Adjusted R-squared:  0.1984 
+## F-statistic: 5.579 on 2 and 35 DF,  p-value: 0.007887</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="regressions.html#cb30-1" aria-hidden="true" tabindex="-1"></a>county_summer_yield<span class="sc">$</span>fitted <span class="ot">&lt;-</span> lm_countysummeryields_quad<span class="sc">$</span>fitted.values</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="regressions.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#construct plot</span></span>
+<span id="cb31-2"><a href="regressions.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(county_summer_yield) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="regressions.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> meatmax, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="regressions.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> meatmax, <span class="at">y =</span> fitted)) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="regressions.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb31-6"><a href="regressions.html#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tmax (°C)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Corn Yield&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The adjusted R-squared of 0.1984 shows that a quadratic regression isn’t terrible, but doesn’t quite fit. Overall, both the regression and overall plot indicates that the highest yields take place around a t_max of 28.</p>
+</div>
+<div id="panel-graphs-for-all-iowa-counties" class="section level2" number="4.9">
+<h2><span class="header-section-number">4.9</span> Panel Graphs for All Iowa Counties</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="regressions.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#group by counties</span></span>
+<span id="cb32-2"><a href="regressions.html#cb32-2" aria-hidden="true" tabindex="-1"></a>county_yield_panel <span class="ot">&lt;-</span> cornyieldsall <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="regressions.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href="regressions.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5"><a href="regressions.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(county_ansi))</span>
+<span id="cb32-6"><a href="regressions.html#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="regressions.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#filter by summer</span></span>
+<span id="cb32-8"><a href="regressions.html#cb32-8" aria-hidden="true" tabindex="-1"></a>county_summer_panel <span class="ot">&lt;-</span> tmaxdf <span class="sc">%&gt;%</span></span>
+<span id="cb32-9"><a href="regressions.html#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(countyfp) <span class="sc">%&gt;%</span></span>
+<span id="cb32-10"><a href="regressions.html#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(doy <span class="sc">&gt;=</span> <span class="dv">152</span> <span class="sc">&amp;</span> doy <span class="sc">&lt;=</span> <span class="dv">243</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-11"><a href="regressions.html#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meantmax =</span> <span class="fu">mean</span>(tmax)) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-12"><a href="regressions.html#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">county_ansi =</span> <span class="st">&quot;countyfp&quot;</span>)</span>
+<span id="cb32-13"><a href="regressions.html#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="regressions.html#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">#creating panel dataset</span></span>
+<span id="cb32-15"><a href="regressions.html#cb32-15" aria-hidden="true" tabindex="-1"></a>county_summer_panel<span class="sc">$</span>county_ansi <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(county_summer_panel<span class="sc">$</span>county_ansi))</span>
+<span id="cb32-16"><a href="regressions.html#cb32-16" aria-hidden="true" tabindex="-1"></a>county_summeryield_panel <span class="ot">&lt;-</span> <span class="fu">left_join</span>(county_yield_panel,county_summer_panel, <span class="at">by=</span><span class="st">&#39;county_ansi&#39;</span>) </span>
+<span id="cb32-17"><a href="regressions.html#cb32-17" aria-hidden="true" tabindex="-1"></a>county_summeryield_panel <span class="ot">&lt;-</span> <span class="fu">subset</span>(county_summeryield_panel, <span class="at">select =</span> <span class="fu">c</span>(county_ansi, yield, meantmax, year))</span>
+<span id="cb32-18"><a href="regressions.html#cb32-18" aria-hidden="true" tabindex="-1"></a>county_summeryield_panel<span class="sc">$</span>county_ansi <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(county_summeryield_panel<span class="sc">$</span>county_ansi)</span>
+<span id="cb32-19"><a href="regressions.html#cb32-19" aria-hidden="true" tabindex="-1"></a>county_summeryield_panel<span class="sc">$</span>meantmaxsq <span class="ot">&lt;-</span> county_summeryield_panel<span class="sc">$</span>meantmax<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb32-20"><a href="regressions.html#cb32-20" aria-hidden="true" tabindex="-1"></a>lm_county_summeryield_panel <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> county_ansi <span class="sc">+</span> meantmax <span class="sc">+</span> meantmaxsq <span class="sc">+</span> year, county_summeryield_panel)</span>
+<span id="cb32-21"><a href="regressions.html#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_county_summeryield_panel)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ county_ansi + meantmax + meantmaxsq + year, 
+##     data = county_summeryield_panel)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -101.016   -9.576    3.141   14.498   52.720 
+## 
+## Coefficients: (2 not defined because of singularities)
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    -4.447e+03  5.773e+01 -77.031  &lt; 2e-16 ***
+## county_ansi3   -4.038e+00  4.822e+00  -0.838 0.402346    
+## county_ansi5    1.137e+01  4.762e+00   2.387 0.017012 *  
+## county_ansi7   -1.875e+01  4.791e+00  -3.913 9.27e-05 ***
+## county_ansi9    9.961e+00  4.762e+00   2.092 0.036510 *  
+## county_ansi11   1.214e+01  4.762e+00   2.550 0.010815 *  
+## county_ansi13   1.400e+01  4.762e+00   2.940 0.003305 ** 
+## county_ansi15   1.794e+01  4.762e+00   3.767 0.000168 ***
+## county_ansi17   1.907e+01  4.762e+00   4.006 6.30e-05 ***
+## county_ansi19   1.618e+01  4.762e+00   3.398 0.000687 ***
+## county_ansi21   1.527e+01  4.762e+00   3.207 0.001352 ** 
+## county_ansi23   1.620e+01  4.762e+00   3.403 0.000674 ***
+## county_ansi25   1.611e+01  4.762e+00   3.384 0.000721 ***
+## county_ansi27   1.444e+01  4.762e+00   3.032 0.002443 ** 
+## county_ansi29   7.471e+00  4.762e+00   1.569 0.116740    
+## county_ansi31   1.950e+01  4.762e+00   4.095 4.30e-05 ***
+## county_ansi33   1.259e+01  4.762e+00   2.643 0.008249 ** 
+## county_ansi35   1.961e+01  4.791e+00   4.094 4.32e-05 ***
+## county_ansi37   1.136e+01  4.762e+00   2.385 0.017131 *  
+## county_ansi39  -2.391e+01  4.854e+00  -4.926 8.76e-07 ***
+## county_ansi41   1.311e+01  4.762e+00   2.752 0.005948 ** 
+## county_ansi43   1.667e+01  4.762e+00   3.502 0.000468 ***
+## county_ansi45   1.564e+01  4.762e+00   3.285 0.001027 ** 
+## county_ansi47   1.308e+01  4.762e+00   2.748 0.006032 ** 
+## county_ansi49   1.140e+01  4.762e+00   2.394 0.016730 *  
+## county_ansi51  -1.835e+01  4.791e+00  -3.829 0.000130 ***
+## county_ansi53  -1.692e+01  4.854e+00  -3.485 0.000497 ***
+## county_ansi55   1.784e+01  4.762e+00   3.746 0.000182 ***
+## county_ansi57   9.205e+00  4.791e+00   1.921 0.054767 .  
+## county_ansi59   9.586e+00  4.762e+00   2.013 0.044179 *  
+## county_ansi61   1.847e+01  4.762e+00   3.879 0.000107 ***
+## county_ansi63   1.505e+01  4.791e+00   3.141 0.001694 ** 
+## county_ansi65   1.564e+01  4.762e+00   3.284 0.001031 ** 
+## county_ansi67   1.292e+01  4.762e+00   2.713 0.006703 ** 
+## county_ansi69   1.818e+01  4.762e+00   3.818 0.000137 ***
+## county_ansi71   5.283e+00  4.791e+00   1.103 0.270241    
+## county_ansi73   1.652e+01  4.762e+00   3.469 0.000528 ***
+## county_ansi75   1.861e+01  4.762e+00   3.908 9.45e-05 ***
+## county_ansi77   5.432e+00  4.762e+00   1.141 0.254046    
+## county_ansi79   1.771e+01  4.791e+00   3.696 0.000222 ***
+## county_ansi81   1.725e+01  4.762e+00   3.622 0.000296 ***
+## county_ansi83   1.844e+01  4.762e+00   3.873 0.000109 ***
+## county_ansi85   6.308e+00  4.822e+00   1.308 0.190871    
+## county_ansi87   2.288e+00  4.762e+00   0.481 0.630897    
+## county_ansi89   9.930e+00  4.762e+00   2.085 0.037110 *  
+## county_ansi91   1.767e+01  4.762e+00   3.711 0.000210 ***
+## county_ansi93   1.811e+01  4.791e+00   3.780 0.000159 ***
+## county_ansi95   9.245e+00  4.791e+00   1.930 0.053723 .  
+## county_ansi97   5.466e+00  4.762e+00   1.148 0.251074    
+## county_ansi99   1.824e+01  4.791e+00   3.808 0.000142 ***
+## county_ansi101 -5.980e+00  4.762e+00  -1.256 0.209229    
+## county_ansi103  6.598e+00  4.791e+00   1.377 0.168575    
+## county_ansi105  1.373e+01  4.791e+00   2.867 0.004168 ** 
+## county_ansi107  1.115e+00  4.762e+00   0.234 0.814897    
+## county_ansi109  1.977e+01  4.762e+00   4.152 3.37e-05 ***
+## county_ansi111 -4.163e+00  4.762e+00  -0.874 0.382010    
+## county_ansi113  1.244e+01  4.791e+00   2.597 0.009438 ** 
+## county_ansi115  4.693e+00  4.762e+00   0.986 0.324418    
+## county_ansi117 -2.157e+01  4.854e+00  -4.444 9.08e-06 ***
+## county_ansi119  1.481e+01  4.762e+00   3.109 0.001890 ** 
+## county_ansi121 -1.192e+00  4.762e+00  -0.250 0.802273    
+## county_ansi123  8.393e+00  4.762e+00   1.763 0.078051 .  
+## county_ansi125  2.008e+00  4.791e+00   0.419 0.675200    
+## county_ansi127  2.113e+01  4.791e+00   4.410 1.06e-05 ***
+## county_ansi129  5.207e+00  4.822e+00   1.080 0.280268    
+## county_ansi131  1.599e+01  4.762e+00   3.358 0.000792 ***
+## county_ansi133  2.612e-01  4.762e+00   0.055 0.956257    
+## county_ansi135 -1.605e+01  4.791e+00  -3.350 0.000815 ***
+## county_ansi137  4.193e+00  4.762e+00   0.881 0.378621    
+## county_ansi139  8.454e+00  4.762e+00   1.775 0.075914 .  
+## county_ansi141  2.138e+01  4.762e+00   4.489 7.36e-06 ***
+## county_ansi143  1.623e+01  4.762e+00   3.409 0.000659 ***
+## county_ansi145 -2.161e+00  4.762e+00  -0.454 0.650018    
+## county_ansi147  1.421e+01  4.762e+00   2.985 0.002856 ** 
+## county_ansi149  1.130e+01  4.791e+00   2.359 0.018392 *  
+## county_ansi151  1.804e+01  4.791e+00   3.765 0.000169 ***
+## county_ansi153  1.409e+01  4.762e+00   2.959 0.003104 ** 
+## county_ansi155  1.127e+01  4.791e+00   2.353 0.018674 *  
+## county_ansi157  1.190e+01  4.762e+00   2.499 0.012509 *  
+## county_ansi159 -2.032e+01  4.791e+00  -4.242 2.27e-05 ***
+## county_ansi161  1.610e+01  4.762e+00   3.382 0.000728 ***
+## county_ansi163  1.999e+01  4.762e+00   4.199 2.74e-05 ***
+## county_ansi165  1.242e+01  4.791e+00   2.592 0.009582 ** 
+## county_ansi167  2.028e+01  4.762e+00   4.258 2.11e-05 ***
+## county_ansi169  1.564e+01  4.762e+00   3.284 0.001033 ** 
+## county_ansi171  1.459e+01  4.762e+00   3.065 0.002194 ** 
+## county_ansi173 -1.492e+01  4.791e+00  -3.115 0.001853 ** 
+## county_ansi175 -1.017e+01  4.791e+00  -2.122 0.033861 *  
+## county_ansi177 -1.457e+01  4.762e+00  -3.060 0.002225 ** 
+## county_ansi179 -5.617e+00  4.791e+00  -1.172 0.241117    
+## county_ansi181 -2.341e+00  4.822e+00  -0.485 0.627358    
+## county_ansi183  8.595e+00  4.791e+00   1.794 0.072894 .  
+## county_ansi185 -2.081e+01  4.791e+00  -4.344 1.44e-05 ***
+## county_ansi187  2.026e+01  4.762e+00   4.254 2.15e-05 ***
+## county_ansi189  1.695e+01  4.762e+00   3.560 0.000375 ***
+## county_ansi191  1.315e+01  4.762e+00   2.761 0.005792 ** 
+## county_ansi193  6.556e+00  4.762e+00   1.377 0.168630    
+## county_ansi195  1.511e+01  4.762e+00   3.174 0.001517 ** 
+## county_ansi197  1.816e+01  4.762e+00   3.813 0.000139 ***
+## meantmax               NA         NA      NA       NA    
+## meantmaxsq             NA         NA      NA       NA    
+## year            2.292e+00  2.881e-02  79.557  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 21.43 on 3915 degrees of freedom
+## Multiple R-squared:  0.6579, Adjusted R-squared:  0.6493 
+## F-statistic: 76.05 on 99 and 3915 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="regressions.html#cb34-1" aria-hidden="true" tabindex="-1"></a>county_summeryield_panel<span class="sc">$</span>fitted <span class="ot">&lt;-</span> lm_county_summeryield_panel<span class="sc">$</span>fitted.values</span>
+<span id="cb34-2"><a href="regressions.html#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="regressions.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#graphing</span></span>
+<span id="cb34-4"><a href="regressions.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(county_summeryield_panel) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="regressions.html#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yield, <span class="at">y =</span> fitted)) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="regressions.html#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> yield, <span class="at">y =</span> fitted),<span class="at">method =</span> lm) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="regressions.html#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Actual Yield&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Fitted Yield&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>The fitted yield matches the actual yield; the adjusted r-squared of 0.65 and extremely low p-value indicate the yield is a decent fit. The significance of both temperature values to the fitted model has decreased, with N/A coefficients.</p>
+<div id="cross-section-plot-for-soybeans-all-iowa-counties" class="section level3" number="4.9.1">
+<h3><span class="header-section-number">4.9.1</span> Cross-Section Plot for Soybeans – All Iowa Counties</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="regressions.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#get soybeans data</span></span>
+<span id="cb35-2"><a href="regressions.html#cb35-2" aria-hidden="true" tabindex="-1"></a>params_soy <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">commodity_desc =</span> <span class="st">&quot;Soybeans&quot;</span>, <span class="at">statisticcat_desc=</span><span class="st">&quot;YIELD&quot;</span>, <span class="at">prodn_practice_desc =</span> <span class="st">&quot;ALL PRODUCTION PRACTICES&quot;</span>, <span class="at">year__GE =</span> <span class="dv">1981</span>, <span class="at">state_alpha =</span> <span class="st">&quot;IA&quot;</span>)</span>
+<span id="cb35-3"><a href="regressions.html#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="regressions.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co">#create documents</span></span>
+<span id="cb35-5"><a href="regressions.html#cb35-5" aria-hidden="true" tabindex="-1"></a>soyyieldsall <span class="ot">&lt;-</span> <span class="fu">nassqs_yields</span>(params_soy)</span>
+<span id="cb35-6"><a href="regressions.html#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="regressions.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co">#setting values as numerics</span></span>
+<span id="cb35-8"><a href="regressions.html#cb35-8" aria-hidden="true" tabindex="-1"></a>soyyieldsall<span class="sc">$</span>county_ansi <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(soyyieldsall<span class="sc">$</span>county_ansi)</span>
+<span id="cb35-9"><a href="regressions.html#cb35-9" aria-hidden="true" tabindex="-1"></a>soyyieldsall<span class="sc">$</span>yield <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(soyyieldsall<span class="sc">$</span>Value)</span>
+<span id="cb35-10"><a href="regressions.html#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="regressions.html#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co">#filter relevant values</span></span>
+<span id="cb35-12"><a href="regressions.html#cb35-12" aria-hidden="true" tabindex="-1"></a>soyyields <span class="ot">&lt;-</span> <span class="fu">select</span>(soyyieldsall, county_ansi, county_name, yield, year) <span class="sc">%&gt;%</span></span>
+<span id="cb35-13"><a href="regressions.html#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(county_ansi) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(yield))</span>
+<span id="cb35-14"><a href="regressions.html#cb35-14" aria-hidden="true" tabindex="-1"></a>soyyields <span class="ot">&lt;-</span> <span class="fu">tibble</span>(soyyields)</span>
+<span id="cb35-15"><a href="regressions.html#cb35-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-16"><a href="regressions.html#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="co">#cross-section</span></span>
+<span id="cb35-17"><a href="regressions.html#cb35-17" aria-hidden="true" tabindex="-1"></a>soy_yields_18 <span class="ot">&lt;-</span> soyyields <span class="sc">%&gt;%</span></span>
+<span id="cb35-18"><a href="regressions.html#cb35-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year<span class="sc">==</span><span class="dv">2018</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-19"><a href="regressions.html#cb35-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county_name) <span class="sc">%&gt;%</span></span>
+<span id="cb35-20"><a href="regressions.html#cb35-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb35-21"><a href="regressions.html#cb35-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(county_ansi))</span>
+<span id="cb35-22"><a href="regressions.html#cb35-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-23"><a href="regressions.html#cb35-23" aria-hidden="true" tabindex="-1"></a>summer_county_18 <span class="ot">&lt;-</span> tmaxdf <span class="sc">%&gt;%</span></span>
+<span id="cb35-24"><a href="regressions.html#cb35-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(countyfp) <span class="sc">%&gt;%</span></span>
+<span id="cb35-25"><a href="regressions.html#cb35-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year<span class="sc">==</span><span class="dv">2018</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-26"><a href="regressions.html#cb35-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(doy <span class="sc">&gt;=</span> <span class="dv">152</span> <span class="sc">&amp;</span> doy <span class="sc">&lt;=</span><span class="dv">243</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-27"><a href="regressions.html#cb35-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meatmax=</span><span class="fu">mean</span>(tmax)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-28"><a href="regressions.html#cb35-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">county_ansi =</span> <span class="st">&quot;countyfp&quot;</span>)</span>
+<span id="cb35-29"><a href="regressions.html#cb35-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-30"><a href="regressions.html#cb35-30" aria-hidden="true" tabindex="-1"></a>summer_county_18<span class="sc">$</span>county_ansi <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(summer_county_18<span class="sc">$</span>county_ansi))</span>
+<span id="cb35-31"><a href="regressions.html#cb35-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-32"><a href="regressions.html#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="co">#join datasets</span></span>
+<span id="cb35-33"><a href="regressions.html#cb35-33" aria-hidden="true" tabindex="-1"></a>soy_county_summer_yield <span class="ot">&lt;-</span> <span class="fu">left_join</span>(soy_yields_18,summer_county_18, <span class="at">by=</span><span class="st">&#39;county_ansi&#39;</span>)</span>
+<span id="cb35-34"><a href="regressions.html#cb35-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-35"><a href="regressions.html#cb35-35" aria-hidden="true" tabindex="-1"></a>soy_county_summer_yield<span class="sc">$</span>tempsq_county_summer <span class="ot">&lt;-</span>(soy_county_summer_yield<span class="sc">$</span>meatmax)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="regressions.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#fit linear model</span></span>
+<span id="cb36-2"><a href="regressions.html#cb36-2" aria-hidden="true" tabindex="-1"></a>lm_soy_countysummeryields_quad <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> meatmax <span class="sc">+</span> tempsq_county_summer, soy_county_summer_yield)</span>
+<span id="cb36-3"><a href="regressions.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_summeryields_quad)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ meantmax + tempsq_summer, data = summer_yields)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -56.587 -22.262  -0.982  22.409  52.798 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)   -4223.604   1446.639  -2.920  0.00609 **
+## meantmax        328.918    107.068   3.072  0.00410 **
+## tempsq_summer    -6.173      1.979  -3.119  0.00362 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 29.5 on 35 degrees of freedom
+## Multiple R-squared:  0.2417, Adjusted R-squared:  0.1984 
+## F-statistic: 5.579 on 2 and 35 DF,  p-value: 0.007887</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="regressions.html#cb38-1" aria-hidden="true" tabindex="-1"></a>soy_county_summer_yield<span class="sc">$</span>fitted <span class="ot">&lt;-</span> lm_soy_countysummeryields_quad<span class="sc">$</span>fitted.values</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="regressions.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#construct plot</span></span>
+<span id="cb39-2"><a href="regressions.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(soy_county_summer_yield) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="regressions.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> meatmax, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="regressions.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> meatmax, <span class="at">y =</span> fitted)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="regressions.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb39-6"><a href="regressions.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tmax (°C)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Soy Yield&quot;</span>)</span></code></pre></div>
+<p><img src="05-Corn-Yields_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>A county cross-section for soil yield and temperature shows a similar relationship to corn yield. The highest yields are around a T-max of 28, and can be reasonably modeled by a quadratic regression.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="iterations-snow-functions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

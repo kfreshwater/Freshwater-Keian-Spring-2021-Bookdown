@@ -1,0 +1,293 @@
+---
+output: html_document
+---
+
+# Lagos Spatial Analysis
+
+```{r setup, include=FALSE, warning=F}
+library(tidyverse) 
+library(sf) #Spatial package that can read and create shapefiles 
+library(mapview) #Interactive maps
+library(LAGOSNE) #Lots of clean lake data
+library(USAboundaries) #USA states and counties
+```
+
+**Case Study: American Midwest**
+
+## Loading in data
+
+```{r data read,warning=F}
+# #Lagos download script
+LAGOSNE::lagosne_get(dest_folder = LAGOSNE:::lagos_path())
+
+#Load in lagos
+lagos <- lagosne_load()
+
+#Grab the lake centroid info
+lake_centers <- lagos$locus
+
+```
+
+## Using Mapview
+```{r,warning=F}
+#Look at the column names
+#names(lake_centers)
+
+#Look at the structure
+#str(lake_centers)
+
+#View the full dataset
+#View(lake_centers %>% slice(1:100))
+
+spatial_lakes <- st_as_sf(lake_centers,coords=c('nhd_long','nhd_lat'),
+                          crs=4326) %>%
+                          st_transform(2163)
+
+#Subset for plotting
+subset_spatial <- spatial_lakes %>%
+  slice(1:100) 
+
+subset_baser <- spatial_lakes[1:100,]
+
+#Dynamic mapviewer
+mapview(subset_spatial)
+
+```
+
+### Subset to only Minnesota
+
+```{r,warning=F}
+states <- us_states()
+
+#Plot all the states to check if they loaded
+#mapview(states)
+minnesota <- states %>%
+  filter(name == 'Minnesota') %>%
+  st_transform(2163)
+
+#Subset lakes based on spatial position
+minnesota_lakes <- spatial_lakes[minnesota,]
+
+#Plotting the first 1000 lakes
+minnesota_lakes %>%
+  arrange(-lake_area_ha) %>%
+    slice(1:1000) %>%
+  mapview(.,zcol = 'lake_area_ha')
+```
+
+## Map outline of Iowa and Illinois
+
+```{r,warning=F, message=F}
+
+#Subset to Iowa
+Iowa <- states %>%
+  filter(name == 'Iowa') %>%
+  st_transform(2163)
+
+#Subset to Illinois
+Illinois <- states %>%
+  filter(name == 'Illinois') %>%
+  st_transform(2163)
+
+#Combine both dataframes
+Iowa_and_Illinois <- combine(Iowa,Illinois)
+
+mapview(Iowa_and_Illinois)
+
+```
+
+
+### Subset LAGOS data to these sites
+
+```{r,warning=F,message=F}
+#Subset lakes based on spatial position
+Iowa_and_Illinois_lakes <- spatial_lakes[Iowa_and_Illinois,]
+```
+
+There are fewer lake sites in Illinois and Iowa combined compared to Minnesota. Iowa and Illinois have a combined 16466 observations, while Minnesota alone has 29038 observations.
+
+## Histograms -- Iowa vs. Minnesota Lake Size
+
+```{r,warning=F,message=F}
+
+#Subset just Iowa
+Iowa__lakes <- spatial_lakes[Iowa,]
+```
+```{r,warning=F, message=F}
+#Create Iowa Histogram
+ggplot(data=Iowa__lakes,aes(x=lake_area_ha)) +
+  geom_histogram() +
+  scale_x_log10() +
+  xlab('Log Scale - Iowa Lake Area (ha)')
+```
+```{r,warning=F, message=F}
+#Create Minnesota Histogram
+ggplot(data=minnesota_lakes,aes(x=lake_area_ha)) +
+  geom_histogram() +
+  scale_x_log10() +
+  xlab('Log Scale - Minnesota Lake Area (ha)')
+```
+
+Although small lakes dominate both states, Minnesota has more larger lakes compared to Iowa.
+
+## Colored and Interactive plot of Iowa/Illinois Lakes
+
+```{r,warning=F,message=F}
+#Plotting the first 1000 lakes
+Iowa_and_Illinois_lakes %>%
+  arrange(-lake_area_ha) %>%
+  slice(1:1000) %>%
+  mapview(.,zcol = 'lake_area_ha',canvas=TRUE)
+```
+
+
+### What other data sources might we use to understand how reservoirs and natural lakes vary in size in these three states? 
+  
+Mapping groundwater wells by water level could illustrate whether there's a relationship between groundwater and reservoir/lake size. Additionally, precipitation collection sites for both rain and snow could be compared to determine whether a relationship exists for reservoir/lake size.
+
+**Case Study: Expanded Lake Characteristics**
+
+##Add Library
+
+```{r, warning=F}
+library(lubridate)
+```
+
+## Create sf object from Lagos
+```{r, warning=F,message=F}
+
+# Make an sf object 
+spatial_lakes <- st_as_sf(lake_centers,coords=c('nhd_long','nhd_lat'),
+                          crs=4326)
+
+#Grab the water quality data
+nutr <- lagos$epi_nutr
+
+#Look at column names
+#names(nutr)
+```
+
+## Subset columns nutr to keep Key Info
+
+
+```{r}
+clarity_only <- nutr %>%
+  select(lagoslakeid,sampledate,chla,doc,secchi) %>%
+  mutate(sampledate = as.character(sampledate) %>% ymd(.))
+
+```
+
+
+### Keep sites with at least 200 observations 
+
+```{r}
+
+#Look at the number of rows of dataset
+#nrow(clarity_only)
+
+chla_secchi <- clarity_only %>%
+  filter(!is.na(chla),
+         !is.na(secchi))
+
+# How many observatiosn did we lose?
+# nrow(clarity_only) - nrow(chla_secchi)
+
+
+# Keep only the lakes with at least 200 observations of secchi and chla
+chla_secchi_200 <- chla_secchi %>%
+  group_by(lagoslakeid) %>%
+  mutate(count = n()) %>%
+  filter(count > 200)
+
+```
+
+
+### Join water quality data to spatial data
+
+```{r}
+spatial_200 <- inner_join(spatial_lakes,chla_secchi_200 %>%
+                            distinct(lagoslakeid,.keep_all=T),
+                          by='lagoslakeid')
+
+```
+
+## Mean Chl_a map
+
+```{r}
+### Take the mean chl_a and secchi by lake
+
+mean_values_200 <- chla_secchi_200 %>%
+  # Take summary by lake id
+  group_by(lagoslakeid) %>%
+  # take mean chl_a per lake id
+  summarize(mean_chl = mean(chla,na.rm=T),
+            mean_secchi=mean(secchi,na.rm=T)) %>%
+  #Get rid of NAs
+  filter(!is.na(mean_chl),
+         !is.na(mean_secchi)) %>%
+  # Take the log base 10 of the mean_chl
+  mutate(log10_mean_chl = log10(mean_chl))
+
+#Join datasets
+mean_spatial <- inner_join(spatial_lakes,mean_values_200,
+                          by='lagoslakeid') 
+
+#Make a map
+mapview(mean_spatial,zcol='log10_mean_chl')
+```
+
+
+## Secchi Disk Depth and Chlorophyll Correlations for sites with > 200 observations?
+
+```{r,message=F,warning=F}
+ggplot(data=chla_secchi_200,aes(x=chla,y=secchi,color= sampledate)) +
+  geom_point() +
+  xlab('Mean Chlorophyll A Concentration') +
+  ylab('Secchi Disk Depth')
+```
+
+  
+In general, a high secchi disk depth is correlated to virtually 0 mean Chlorophyll A concentration; the mean Chlorophyll A concentration is highest at secchi disk depth of 0. Chlorophyll is used by plants and algae in the process of photosynthesis. When there is no light (i.e. clouded water characterized by a high Secchi Disk depth), organisms with Cholorophyll A cannot maintain life, This is why the highest mean Chlorophyll A concentrations are found solely at a Secchi disk depth of 0.
+
+## Table of states with most data 
+
+```{r,message=F,warning=F}
+
+#count by zone ID
+counts_site <- lake_centers %>%
+  group_by(lagoslakeid) %>%
+  mutate(count = n()) %>%
+  summarize(count=count,
+            state_zoneid)
+
+#match zone_ID to state name
+counts_state_IDs <- inner_join(counts_site,lagos$state,by="state_zoneid")
+
+#sum counts, then isolate state names and number of data points
+sum_states <- counts_state_IDs %>%
+  group_by(state_name) %>%
+  summarize(number_of_observations = sum(count),
+            state_name=state_name,) %>%
+  distinct(state_name,.keep_all=T) %>%
+  arrange(desc(number_of_observations))
+
+#print table
+knitr::kable(sum_states,col.names=c('State Name', 'Number of Data Points'))
+```
+
+
+     
+Minnesota has the most data points, at 29,022. Rhode Island has the fewest data points, at 618.
+  
+## Mapview of spatial pattern in Secchi disk depth for lakes with > 200 observations
+
+```{r}
+mean_spatial %>%
+  rename(mean_secchi_depth = mean_secchi) %>%
+  arrange(-mean_secchi_depth) %>%
+  mapview(.,zcol = 'mean_secchi_depth', canvas=TRUE)
+```
+
+
+For lakes with over 200 observations, mean secchi depths in the midwest, with the exception of Wisconsin, tend to be low. On the other hand, for lakes with over 200 observations, the highest depths are in the Northeast/New England. For example, the highest secchi disk depth is near the NY-VT border.
+
