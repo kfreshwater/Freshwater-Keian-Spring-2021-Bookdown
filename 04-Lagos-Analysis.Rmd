@@ -1,6 +1,4 @@
----
-output: html_document
----
+
 
 # Lagos Spatial Analysis
 
